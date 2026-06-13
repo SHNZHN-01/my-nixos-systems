@@ -16,6 +16,6 @@
         boot.kernelModules = [ ];
         boot.extraModulePackages = [ ];
 
-        nixpkgs.hostPlatform = pkgs.system;
+        nixpkgs.hostPlatform = "x86_64-linux";
     };
 }

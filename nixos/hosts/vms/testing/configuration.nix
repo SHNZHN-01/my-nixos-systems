@@ -10,7 +10,7 @@
         imports = [ 
             self.nixosModules.common
             self.nixosModules.desktop
-            self.nixosModules.virtualization
+            self.nixosModules.virtualized
 
             inputs.disko.nixosModules.disko
             self.diskoConfigurations.testing

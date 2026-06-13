@@ -227,6 +227,20 @@
         gcc
         clang
         gnumake
+        discord
+        spotify
+        whatsapp-electron
+        telegram-desktop
+        aflplusplus
+        # binwalk
+        python3
+        go
+        qemu_full
+        virtualbox
+        google-chrome
+        ungoogled-chromium
+        firefox
+        burpsuite
     ] ++ (with wrapped; [
         alacritty
         polybar

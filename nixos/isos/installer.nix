@@ -52,22 +52,11 @@ let
         clear
         reboot
       '';
-
-      # profile = pkgs.writeText "profile" ''
-      #   if [ ! -e /tmp/.auto-install-started ]; then
-      #     touch /tmp/.auto-install-started
-      #     exec ${installer}
-      #   fi
-      # '';
     in {
       imports = [
         "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
         self.nixosModules.nix
       ];
-
-      # systemd.tmpfiles.rules = [
-      #   "L+ /root/.profile - - - - ${profile}"
-      # ];
 
       boot.kernelPackages = pkgs.linuxPackages_latest;
 

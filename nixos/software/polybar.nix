@@ -40,7 +40,7 @@
           #separator            = "/";
           separator          = "|";
           separator-foreground = "\${colors.dimmed}";
-          font-0 = "${font.name}:pixelsize=${toString font.polybar_size}:style=Medium;2";
+          font-0 = "${font.name}:pixelsize=${toString font.polybar_size}:style=Regular;2";
           modules-left   = "xworkspaces";
           modules-center = "";
           modules-right  = "filesystem pulseaudio memory cpu eth date";

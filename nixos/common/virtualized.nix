@@ -1,6 +1,5 @@
-# nixos/common/guest.nix
 { ... }: {
-  flake.nixosModules.virtualization = { config, lib, ... }:
+  flake.nixosModules.virtualized = { config, lib, ... }:
     let
       username = config.username;
       host = config.platform;

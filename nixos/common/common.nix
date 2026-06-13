@@ -45,6 +45,8 @@
         tree
         vim
         file
+        fd
+        ranger
     ] ++ (with wrapped; [
       fzf
     ]);
