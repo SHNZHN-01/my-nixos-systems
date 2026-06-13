@@ -5,6 +5,5 @@
 
   #flake.nixosModules = builtins.mapAttrs(_: v: v.install) self.wrappers;
 
-  #systems = [ inputs.nixpkgs.lib.platforms.all ];
-  systems = [ "x86_64-linux" ];
+  systems = inputs.nixpkgs.lib.platforms.all;
 }
