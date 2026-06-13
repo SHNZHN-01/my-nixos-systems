@@ -37,7 +37,17 @@ let
   # let s:gray5    = "#7a8478" " Grey light
   # let s:gray6    = "#4a555b" " Grey dim (darker for better blending)
 
-  font = "JetBrainsMono Nerd Font Mono";
+  font = {
+    name = "JetBrainsMono Nerd Font Mono";
+    alacritty_size = 10.5;
+    polybar_size = 10;
+    rofi_size = 10;
+
+    # name = "Terminess Nerd Font Mono";
+    # alacritty_size = 12;
+    # polybar_size = 11;
+    # rofi_size = 12;
+  };
 
   stripHash = str:
     if builtins.substring 0 1 str == "#"

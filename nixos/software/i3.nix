@@ -13,7 +13,7 @@
 
         # Font for window titles. Will also be used by the bar unless a different font
         # is used in the bar {} block below.
-        font pango:${font} 0 
+        font pango:${font.name} 0 
 
         # Start XDG autostart .desktop files using dex. See also
         # https://wiki.archlinux.org/index.php/XDG_Autostart

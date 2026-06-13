@@ -5,8 +5,8 @@
   in {
     imports = [ wlib.wrapperModules.alacritty ];
     settings = {
-      font.size = 11;
-      font.normal.family = "${font}";
+      font.size = font.alacritty_size;
+      font.normal.family = "${font.name}";
       font.normal.style = "Regular";
 
       terminal.shell = "/run/current-system/sw/bin/bash";

@@ -37,7 +37,7 @@
             background-color: transparent;
             text-color: ${colors.base07};
             transparent: rgba(0,0,0,0);
-            font: "${font} 10";
+            font: "${font.name} ${toString font.rofi_size}";
             highlight: underline bold ${colors.base07};
             green: ${colors.base02};
             aqua: ${colors.base06};
@@ -74,7 +74,7 @@
             border-radius: 10px;
             padding: 5;
             background-color: @background;
-            font: "${font} 8";
+            font: "${font.name} 8";
             color: @foreground;
         }
 
@@ -85,7 +85,7 @@
             border: 2px 2px 2px 2px;
             border-radius: 15px 15px 0px 0px;
             border-color: @foreground;
-            font: "${font} 18";
+            font: "${font.name} 18";
         }
 
         entry, prompt, case-indicator {

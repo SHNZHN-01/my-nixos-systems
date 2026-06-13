@@ -209,7 +209,7 @@
 
     fonts.packages = with pkgs; [
         nerd-fonts.jetbrains-mono
-        tamsyn
+        nerd-fonts.terminess-ttf
     ];
 
     users.users.${config.username}.packages = with pkgs; [
