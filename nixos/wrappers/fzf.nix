@@ -2,7 +2,7 @@
   flake.wrappers.fzf = { config, lib, wlib, pkgs, ... }: {
     imports = [ wlib.modules.default ];
 
-    # We use `lib.types.nullOr lib.types.str`, which means that this options can either be null or a string.
+    # We use `lib.types.nullOr lib.types.str`, which means that these options can either be null or a string.
     # The in the config.env declarations we instruct Nix to only make the config.env.FZF_X attribute
     # if the value of the options is not set to `null`.
     options = {

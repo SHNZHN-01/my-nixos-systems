@@ -1,4 +1,4 @@
-# TODO: create a toPolybarConfig function that works, for example, like "toINI"
+# TODO: create a toPolybarConfig function that works. Like "toINI"
 { ... }: {
   flake.wrappers.i3 = { config, lib, wlib, pkgs, ... }: {
     imports = [ wlib.modules.default ];
