@@ -67,6 +67,10 @@ let
         #set -euo pipefail
         clear
 
+        echo "===> Setting DNS servers"
+        resolvectl dns "$(ip -o -4 route show default | awk '{print $5}' | head -1)" 1.1.1.1 8.8.8.8 2>/dev/null || \
+          printf 'nameserver 1.1.1.1\nnameserver 8.8.8.8\n' > /etc/resolv.conf
+
         echo "===> Waiting for network..."
         until ping -c1 cache.nixos.org &>/dev/null; do
           sleep 2
