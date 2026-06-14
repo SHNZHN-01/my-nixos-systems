@@ -118,7 +118,7 @@ let
         if [ ! -e /tmp/.auto-install-started ] && [ "$(tty)" = "/dev/tty1" ]; then
           touch /tmp/.auto-install-started
           echo "===> Waiting for network..."
-          systemctl is-active --wait network-online.target
+          systemctl is-active --wait network-online.target &>/dev/null
           until ping -c1 cache.nixos.org &>/dev/null; do
             sleep 2
           done

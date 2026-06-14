@@ -25,7 +25,6 @@
 
         boot.initrd.luks.devices = {
             "crypted-laptop" = {
-                device = "/dev/disk/by-path/pci-0000:03:00.0-nvme-1-part2";
                 preLVM = true;
             };
         };

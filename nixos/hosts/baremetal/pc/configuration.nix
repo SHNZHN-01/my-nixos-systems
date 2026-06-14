@@ -24,20 +24,17 @@
 
         boot.initrd.luks.devices = {
             "crypted-nixos" = {
-                device = "/dev/disk/by-path/pci-0000:05:00.0-nvme-1-part2";
                 allowDiscards = true;
                 preLVM = true;
             };
 
             "crypted-storage" = {
-                device = "/dev/disk/by-path/pci-0000:00:17.0-ata-4-part1";
                 allowDiscards = true;
                 preLVM = true;
                 keyFile = "/crypto_keyfile.bin";
             };
 
             "crypted-vms" = {
-                device = "/dev/disk/by-path/pci-0000:02:00.0-nvme-1-part1";
                 allowDiscards = true;
                 preLVM = true;
                 keyFile = "/crypto_keyfile.bin";
