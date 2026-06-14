@@ -15,9 +15,9 @@
             self.diskoConfigurations.laptop
         ];
 
-        theme.font.alacritty_size = 11.5;
-        theme.font.polybar_size = 11;
-        theme.font.rofi_size = 11;
+        theme.font.alacritty_size = 13.5;
+        theme.font.polybar_size = 10;
+        theme.font.rofi_size = 13;
 
         services.libinput.enable = true;
 
@@ -33,6 +33,10 @@
         };
 
         hardware.cpu.amd.updateMicrocode = true;
+        hardware.graphics = {
+            enable = true;
+            enable32Bit = true;
+        };
 
         networking.hostName = "laptop";
 

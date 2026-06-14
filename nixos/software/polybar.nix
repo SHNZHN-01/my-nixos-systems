@@ -86,14 +86,16 @@
         "module/memory" = {
           type     = "internal/memory";
           interval = 2;
+          format = "<label>";
           format-prefix            = "";
           format-prefix-foreground = "\${colors.foreground}";
+          label = "%gb_used% / %gb_total%";
         };
 
         "module/cpu" = {
           type     = "internal/cpu";
           interval = 2;
-          format-prefix            = "CPU ";
+          format-prefix            = "";
           format-prefix-foreground = "\${colors.foreground}";
           label = "%percentage:2%%";
         };

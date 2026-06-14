@@ -63,6 +63,13 @@ let
       installer = pkgs.writeShellScript "auto-install" ''
         #set -euo pipefail
         clear
+
+        echo "===> Waiting for network..."
+        systemctl is-active --wait network-online.target &>/dev/null
+        until ping -c1 cache.nixos.org &>/dev/null; do
+          sleep 2
+        done
+
         echo "===> Partitioning with disko"
         disko --mode destroy,format,mount --flake ${self}#${hostname}
 
@@ -117,11 +124,6 @@ let
       environment.loginShellInit = ''
         if [ ! -e /tmp/.auto-install-started ] && [ "$(tty)" = "/dev/tty1" ]; then
           touch /tmp/.auto-install-started
-          echo "===> Waiting for network..."
-          systemctl is-active --wait network-online.target &>/dev/null
-          until ping -c1 cache.nixos.org &>/dev/null; do
-            sleep 2
-          done
           ${installer}
         fi
       '';

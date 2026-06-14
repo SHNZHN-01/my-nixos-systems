@@ -48,6 +48,7 @@
         file
         fd
         ranger
+        pciutils
     ] ++ (with wrapped; [
       fzf
     ]);
