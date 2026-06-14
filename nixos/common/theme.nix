@@ -39,8 +39,8 @@ let
 
   font = {
     name = "JetBrainsMono Nerd Font Mono";
-    alacritty_size = 10.5;
-    polybar_size = 10;
+    alacritty_size = 11.0;
+    polybar_size = 9;
     rofi_size = 10;
 
     # name = "Terminess Nerd Font Mono";

@@ -218,6 +218,7 @@
     fonts.packages = with pkgs; [
         nerd-fonts.jetbrains-mono
         nerd-fonts.terminess-ttf
+        fixedsys-excelsior
     ];
 
     users.users.${config.username}.packages = with pkgs; [
