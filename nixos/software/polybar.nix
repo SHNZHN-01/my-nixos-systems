@@ -95,7 +95,7 @@
         "module/cpu" = {
           type     = "internal/cpu";
           interval = 2;
-          format-prefix            = "";
+          format-prefix            = "CPU";
           format-prefix-foreground = "\${colors.foreground}";
           label = "%percentage:2%%";
         };

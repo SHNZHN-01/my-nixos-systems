@@ -222,12 +222,17 @@
     ];
 
     # TODO: move some of the packages here into different .nix files
+    # TODO: add dunst, binary ninja
     users.users.${config.username}.packages = with pkgs; [
         xinit
         btop
         git
+        ripgrep
         bat
         bat-extras.batman
+        dtach
+        ueberzugpp
+        zathura
         eza
         gh
         gdb
@@ -242,8 +247,14 @@
         whatsapp-electron
         telegram-desktop
         aflplusplus
-        # binwalk
         python3
+        # python313Packages.setuptools
+        # python313Packages.setuptools-scm
+        # python313Packages.setuptools-rust
+        # python313Packages.angr
+        # python313Packages.binwalk3
+        # binwalk
+        pwntools
         go
         qemu_full
         virtualbox

@@ -17,9 +17,13 @@
 
         networking.hostName = "computer";
 
-        boot.initrd.availableKernelModules = [ "ata_piix" "ohci_pci" "ehci_pci" "ahci" "sd_mod" "sr_mod" ];
-        boot.initrd.kernelModules = [ ];
-        boot.kernelModules = [ ];
+        services.xserver.displayManager.startx.extraCommands = ''
+            ${pkgs.xrandr}/bin/xrandr --output HDMI-0 --mode 1920x1080 --rotate left --pos 0x0 --output DP-4 --mode 1920x1080 --rotate normal --primary --pos 1080x0
+        '';
+
+        boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "sd_mod" ];
+        boot.initrd.kernelModules = [ "dm-snapshot" ];
+        boot.kernelModules = [ "kvm-intel" ];
         boot.extraModulePackages = [ ];
 
         boot.initrd.luks.devices = {
