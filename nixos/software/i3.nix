@@ -15,13 +15,17 @@
 
         floating_modifier $mod
 
-        # start a terminal
         bindsym $mod+Return exec alacritty
+
+        bindsym $mod+Shift+m exec --no-startup-id keybinds
 
         bindsym $mod+Shift+q kill
 
         bindsym $mod+r exec --no-startup-id rofi -show drun 
         bindsym $mod+Shift+r exec --no-startup-id rofi -show combi 
+
+        for_window [class="floatmixer"] floating enable, resize set 900 550, move position center
+        bindsym $mod+Shift+v exec --no-startup-id alacritty --class floatmixer -e wiremix
 
         # change focus
         bindsym $mod+h focus left
@@ -109,10 +113,10 @@
 
         bindsym $mod+Ctrl+r mode "resize"
         mode "resize" {
-                bindsym Left resize shrink width 5 px or 5 ppt
-                bindsym Up resize grow height 5 px or 5 ppt
-                bindsym Down resize shrink height 5 px or 5 ppt
-                bindsym Right resize grow width 5 px or 5 ppt
+                bindsym h resize shrink width 5 px or 5 ppt
+                bindsym k resize grow height 5 px or 5 ppt
+                bindsym j resize shrink height 5 px or 5 ppt
+                bindsym l resize grow width 5 px or 5 ppt
 
                 bindsym Return mode "default"
                 bindsym Escape mode "default"
@@ -120,11 +124,6 @@
 
         bindsym $mod+Escape exec flameshot gui -p $HOME/pictures/screenshots
         bindsym $mod+Shift+Escape exec flameshot gui
-
-        # exec --no-startup-id xsetroot -solid "#272E33"
-        # exec --no-startup-id fcitx5 -d
-        # exec --no-startup-id redshift &
-        # exec --no-startup-id mpd &
 
         exec --no-startup-id i3-msg "workspace 9; layout tabbed; exec discord; exec keepassxc; exec veracrypt; exec whatsapp-electron; exec Telegram; exec spotify"
 

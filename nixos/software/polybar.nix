@@ -1,5 +1,28 @@
 { self, ... }: {
-  flake.lib.makePolybar = { pkgs, font, colors }:
+  flake.lib.makePolybar = { pkgs, font, colors }: let
+    soundScript = pkgs.writeShellScript "polybar-sound" ''
+      wpctl="${pkgs.wireplumber}/bin/wpctl"
+
+      case "$1" in
+        up)   "$wpctl" set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 10%+ ;;
+        down) "$wpctl" set-volume       @DEFAULT_AUDIO_SINK@ 10%- ;;
+        mute) "$wpctl" set-mute         @DEFAULT_AUDIO_SINK@ toggle ;;
+        *)
+          line=$("$wpctl" get-volume @DEFAULT_AUDIO_SINK@)
+          name=$("$wpctl" inspect @DEFAULT_AUDIO_SINK@ \
+            | sed -n 's/.*node\.description = "\(.*\)"/\1/p' | head -n1)
+          if [[ "$line" == *MUTED* ]]; then
+            echo "MUTED"
+          else
+            vol=''${line#Volume: }
+            vol=''${vol%% *}
+            pct=$(${pkgs.gawk}/bin/awk -v v="$vol" 'BEGIN { printf "%d", v * 100 }')
+            echo "VOL ''${pct}%"
+          fi
+          ;;
+      esac
+    '';
+  in
     self.wrappers.polybar.wrap {
       inherit pkgs;
       settings = {
@@ -39,7 +62,7 @@
           font-0 = "${font.name}:pixelsize=${toString font.polybar_size}:antialias:true:style=Regular;2";
           modules-left   = "xworkspaces";
           modules-center = "";
-          modules-right  = "home_filesystem nix_filesystem root_filesystem pulseaudio memory cpu eth dunst date";
+          modules-right  = "home_filesystem nix_filesystem root_filesystem pipewire memory cpu eth date";
           cursor-click   = "pointer";
           cursor-scroll  = "ns-resize";
           enable-ipc     = true;
@@ -65,7 +88,7 @@
           type     = "internal/fs";
           interval = 25;
           mount-0  = "/";
-          label-mounted = "%{F#F0C674}%mountpoint%%{F-} %used% of %total%";
+          label-mounted = "%{F${colors.base03}}%mountpoint%%{F-} %used% of %total%";
           label-unmounted = "%mountpoint% not mounted";
           label-unmounted-foreground = "\${colors.disabled}";
         };
@@ -74,7 +97,7 @@
           type     = "internal/fs";
           interval = 25;
           mount-0  = "/nix";
-          label-mounted = "%{F#F0C674}%mountpoint%%{F-} %used% of %total%";
+          label-mounted = "%{F${colors.base03}}%mountpoint%%{F-} %used% of %total%";
           label-unmounted = "%mountpoint% not mounted";
           label-unmounted-foreground = "\${colors.disabled}";
         };
@@ -83,22 +106,16 @@
           type     = "internal/fs";
           interval = 25;
           mount-0  = "/home";
-          label-mounted = "%{F#F0C674}%mountpoint%%{F-} %used% of %total%";
+          label-mounted = "%{F${colors.base03}}%mountpoint%%{F-} %used% of %total%";
           label-unmounted = "%mountpoint% not mounted";
           label-unmounted-foreground = "\${colors.disabled}";
         };
 
-        "module/pulseaudio" = {
-          type = "internal/pulseaudio";
-          format-volume-prefix            = "VOL ";
-          format-volume-prefix-foreground = "\${colors.foreground}";
-          format-volume = "<label-volume>";
-          label-volume  = "%percentage%%";
-          format-muted-prefix            = "MUTE ";
-          format-muted-prefix-foreground = "\${colors.disabled}";
-          label-muted            = "muted";
-          label-muted-foreground = "\${colors.disabled}";
-          click-right = "pavucontrol";
+        "module/pipewire" = {
+          type        = "custom/script";
+          exec        = "${soundScript}";
+          interval    = "2.0";
+          label       = "%output%";
         };
 
         "module/memory" = {
@@ -123,13 +140,13 @@
           interval = 5;
           format-connected    = "<label-connected>";
           format-disconnected = "<label-disconnected>";
-          label-disconnected  = "%{F#F0C674}%ifname%%{F#707880} disconnected";
+          label-disconnected  = "%{F${colors.base03}}%ifname%%{F#707880} disconnected";
         };
 
         "module/wlan" = {
           "inherit"      = "network-base";
           interface-type = "wireless";
-          label-connected     = "%{F#F0C674}%ifname%%{F-} %essid% %local_ip%";
+          label-connected     = "%{F${colors.base03}}%ifname%%{F-} %essid% %local_ip%";
           format-disconnected = "";
         };
 

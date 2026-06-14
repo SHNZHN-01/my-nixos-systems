@@ -1,3 +1,4 @@
+# TODO: make a file like this but for keepassxc, spotify and whatsapp web
 { ... }: {
   flake.lib.makeAlacritty = { pkgs, font, colors }:
     let

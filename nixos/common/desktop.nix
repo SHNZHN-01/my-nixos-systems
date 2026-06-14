@@ -192,6 +192,12 @@
     .ucf-old 38;5;243
     '';
   in {
+    imports = [
+        self.nixosModules.keybinds
+    ];
+
+    programs.keybinds.enable = true;
+
     services.xserver.enable = true;
     services.xserver.autorun = false;
     services.xserver.windowManager.i3 = {
@@ -209,8 +215,12 @@
         '';
     };
 
+    services.pulseaudio.enable = false;
+    security.rtkit.enable = true;
     services.pipewire = {
       enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
       pulse.enable = true;
     };
 
@@ -255,6 +265,7 @@
         btop
         git
         ripgrep
+        wiremix
         bat
         bat-extras.batman
         dtach
@@ -271,29 +282,61 @@
         gcc
         clang
         gnumake
+        python3
         discord
         spotify
         whatsapp-electron
         telegram-desktop
         aflplusplus
-        python3
         # python313Packages.setuptools
         # python313Packages.setuptools-scm
         # python313Packages.setuptools-rust
         # python313Packages.angr
         # python313Packages.binwalk3
         # binwalk
+        # owasp dependency check
+        # owasp dep scan
+        # jd-gui
+        burpsuite
+        wireshark
+        tshark
+        termshark
+        tcpdump
+        dnsutils
+        hashcat
+        hcxdumptool
+        aircrack-ng
         pwntools
+        android-studio
+        android-tools
+        apktool
+        jadx
+        objection
+        trufflehog
+        trivy
+        gitleaks
+        cve-bin-tool
+        nuclei
+        sqlite
+        binsider
+        sqlmap
+        nmap
+        semgrep
+        codeql
+        frida-tools
         go
+        docker
         qemu_full
         virtualbox
+        firefox
         google-chrome
         ungoogled-chromium
-        firefox
-        burpsuite
     ] ++ [ alacritty polybar rofi ] ++ [
-      inputs.neovim-shnzhn.packages.${pkgs.system}.neovim-shnzhn
+      inputs.neovim-shnzhn.packages.${pkgs.stdenv.hostPlatform.system}.neovim-shnzhn
+      inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];
+
+    nixpkgs.config.android_sdk.accept_license = true;
 
     environment.variables = {
         MAKEFLAGS="-j$(nproc)";
