@@ -6,10 +6,8 @@
         type = "disk";
         device = "/dev/disk/by-path/pci-0000:00:0d.0-ata-1";
         content = {
-          # GPT partition table for this device 
           type = "gpt";
           partitions = {
-            # EFI system partition
             esp = {
               type = "EF00";
               size = "1G";
@@ -21,7 +19,6 @@
               };
             };
 
-            # root partition
             root = {
               size = "100%";
               content = {

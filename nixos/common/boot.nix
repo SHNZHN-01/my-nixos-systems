@@ -16,9 +16,7 @@
 
     boot.kernelPackages = pkgs.linuxPackages_latest;
 
-    # here we can also add the kernelmodules, by default they
-    # they sould be empty and we can set them per host/vm configuration  
-
-    boot.tmp.useTmpfs = lib.mkDefault true;
+    boot.tmp.useTmpfs = true;
+    boot.tmp.tmpfsSize = "16G";
   };
 }

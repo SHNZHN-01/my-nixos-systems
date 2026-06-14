@@ -19,19 +19,71 @@ let
           (builtins.readDir (hostsDir + "/${group}"))))
     groups);
 
+  # ── LUKS helpers ──────────────────────────────────────────────────────────
+  #
+  # Given a host's disko disk attrset, returns a list of partition device paths
+  # that have LUKS content. Uses the by-path device string from disko and
+  # appends the -partN suffix based on partition position.
+  #
+  # Disko's `partitions` is an attrset but insertion order matters for numbering.
+  # We sort by name to get a stable index, matching how disko/parted lays them out.
+  # NOTE: if your partitions have a specific order that doesn't match alphabetical,
+  # override this with an explicit list in the host config instead.
+  getLuksPartitions = disks:
+    lib.concatLists (lib.mapAttrsToList (_diskName: disk:
+      let
+        partitions   = disk.content.partitions or {};
+        # attrNames returns keys in alphabetical order — same order disko uses
+        partNames    = builtins.attrNames partitions;
+        # zip each partition name with its 1-based index
+        indexed      = lib.imap1 (i: name: { inherit i name; }) partNames;
+        luksEntries  = builtins.filter
+          (entry: (partitions.${entry.name}.content.type or "") == "luks")
+          indexed;
+        baseDevice   = disk.device;
+      in
+        map (entry: "${baseDevice}-part${toString entry.i}") luksEntries
+    ) disks);
+
   mkIsoConfiguration = hostname:
     { pkgs, config, modulesPath, ... }:
     let
-      username = self.nixosConfigurations.${hostname}.config.username;
+      username   = self.nixosConfigurations.${hostname}.config.username;
+      disks      = self.nixosConfigurations.${hostname}.config.disko.devices.disk or {};
+      luksDevices = getLuksPartitions disks;
+
+      # Only generate/enroll a keyfile if there are multiple LUKS containers.
+      # A single encrypted disk needs no keyfile — there's only one password prompt anyway.
+      needsKeyfile = (builtins.length luksDevices) > 1;
+
+      # The first LUKS device is the primary one (unlocked interactively).
+      # The rest are enrolled with the keyfile.
+      secondaryDevices = if needsKeyfile then builtins.tail luksDevices else [];
+
       installer = pkgs.writeShellScript "auto-install" ''
         #set -euo pipefail
         clear
         echo "===> Partitioning with disko"
         disko --mode destroy,format,mount --flake ${self}#${hostname}
+
+        ${lib.optionalString needsKeyfile ''
+        echo "===> Generating LUKS keyfile for secondary volumes"
+        mkdir -p /mnt/secrets
+        dd if=/dev/urandom of=/mnt/secrets/crypto_keyfile.bin bs=512 count=4
+        chmod 400 /mnt/secrets/crypto_keyfile.bin
+        chown root:root /mnt/secrets/crypto_keyfile.bin
+
+        echo "===> Enrolling keyfile — you will be prompted for your LUKS passphrase once per device"
+        ${lib.concatMapStringsSep "\n" (dev: ''
+          cryptsetup luksAddKey ${dev} /mnt/secrets/crypto_keyfile.bin
+        '') secondaryDevices}
+        ''}
+
         echo "===> Generating Secure Boot keys"
         sbctl create-keys
         mkdir -p /mnt/var/lib
         cp -a /var/lib/sbctl /mnt/var/lib/
+
         echo "===> Setting up user credentials"
         mkdir -p /mnt/persist/passwords
         while true; do
@@ -46,9 +98,10 @@ let
         unset pw1 pw2
         chmod 600 "/mnt/persist/passwords/${username}"
         chown root:root "/mnt/persist/passwords/${username}"
+
         echo "===> Installing NixOS"
         nixos-install --flake ${self}#${hostname} --no-root-passwd
-        read -sp "===> Done. Press [ Enter ] to reboot. Remember to enter Setup Mode and run `sbctl enroll-keys` to enable Safe Boot..."
+        read -sp "===> Done. Press [ Enter ] to reboot. Remember to enter Setup Mode and run \`sbctl enroll-keys\` to enable Secure Boot..."
         clear
         reboot
       '';

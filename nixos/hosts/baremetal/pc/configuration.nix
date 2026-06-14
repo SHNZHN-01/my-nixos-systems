@@ -15,8 +15,40 @@
             self.diskoConfigurations.pc
         ];
 
+        boot.initrd.availableKernelModules = [ "ata_piix" "ohci_pci" "ehci_pci" "ahci" "sd_mod" "sr_mod" ];
+        boot.initrd.kernelModules = [ ];
+        boot.kernelModules = [ ];
+        boot.extraModulePackages = [ ];
+
+        boot.initrd.luks.devices = {
+            "crypted-nixos" = {
+                device = "/dev/disk/by-path/pci-0000:05:00.0-nvme-1-part2";
+                allowDiscards = true;
+                preLVM = true;
+            };
+
+            "crypted-storage" = {
+                device = "/dev/disk/by-path/pci-0000:00:17.0-ata-4-part1";
+                allowDiscards = true;
+                preLVM = true;
+                keyFile = "/crypto_keyfile.bin";
+            };
+
+            "crypted-vms" = {
+                device = "/dev/disk/by-path/pci-0000:02:00.0-nvme-1-part1";
+                allowDiscards = true;
+                preLVM = true;
+                keyFile = "/crypto_keyfile.bin";
+            };
+        };
+
+        boot.initrd.secrets = {
+            "/crypto_keyfile.bin" = "/secrets/crypto_keyfile.bin";
+        };
+
         networking.hostName = "computer";
 
+        nixpkgs.hostPlatform = "x86_64-linux";
         system.stateVersion = "26.05";
     };
 }
