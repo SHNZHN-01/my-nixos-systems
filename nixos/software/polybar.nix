@@ -1,43 +1,39 @@
 { self, ... }: {
-  perSystem = { pkgs, ... }: let
-    theme = self.colors;
-    font = self.font;
-  in {
-    wrappers.packages.polybar = true;
-    packages.polybar = self.wrappers.polybar.wrap {
+  flake.lib.makePolybar = { pkgs, font, colors }:
+    self.wrappers.polybar.wrap {
       inherit pkgs;
       settings = {
         colors = {
-          background     = theme.base00;
-          background-alt = theme.base08;   # was referenced but undefined
-          foreground     = theme.base07;
-          primary        = theme.base02;
-          secondary      = theme.base06;
-          alert          = theme.base01;
-          warning        = theme.base03;
-          disabled       = theme.base08;
-          dimmed         = theme.base08;
+          background     = colors.base00;
+          background-alt = colors.base08;
+          foreground     = colors.base07;
+          primary        = colors.base02;
+          secondary      = colors.base06;
+          alert          = colors.base01;
+          warning        = colors.base03;
+          disabled       = colors.base08;
+          dimmed         = colors.base08;
         };
 
         "bar/main" = {
           width  = "100%";
           height = "20pt";
           radius = 0;
-          top    = true;
+          top    = false;
+          bottom = true;
 
           background = "\${colors.background}";
           foreground = "\${colors.foreground}";
 
           line-size          = "0pt";
-          border-top-size    = "0pt";
-          border-bottom-size = "2pt";
+          border-top-size    = "2pt";
+          border-bottom-size = "0pt";
           border-right-size  = "0pt";
           border-left-size   = "0pt";
           border-color       = "\${colors.foreground}";
           padding-left       = 0;
           padding-right      = 1;
           module-margin      = 1;
-          #separator            = "/";
           separator          = "|";
           separator-foreground = "\${colors.dimmed}";
           font-0 = "${font.name}:pixelsize=${toString font.polybar_size}:style=Regular;2";
@@ -134,10 +130,9 @@
         };
 
         settings = {
-          screenchange-reload   = true;
-          pseudo-transparency   = true;
+          screenchange-reload = true;
+          pseudo-transparency = true;
         };
       };
     };
-  };
 }

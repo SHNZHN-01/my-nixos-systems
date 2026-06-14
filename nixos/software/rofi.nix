@@ -1,36 +1,23 @@
-{ self, ... }: {
-  flake.wrappers.rofi = { wlib, lib, ... }: let
-    font = self.font;
-    colors = self.colors;
-  in {
-    imports = [ wlib.wrapperModules.rofi ];
+{ ... }: {
+  flake.lib.makeRofi = { pkgs, font, colors }:
+    let
+      configRasi = pkgs.writeText "config.rasi" ''
+        configuration {
+            drun-display-format: "{name}";
+            timeout {
+                action: "kb-cancel";
+                delay:  0;
+            }
+            filebrowser {
+                directories-first: true;
+                sorting-method:    "name";
+            }
+        }
 
-    # `settings` is flat (attrsOf primitive) and can't express the nested
-    # `timeout { }` / `filebrowser { }` blocks, so write config.rasi verbatim.
-    # mkForce because `content` is types.lines — a plain def would concatenate
-    # with the module's auto-generated `configuration { … }`, not replace it.
-    # `theme` is left null; the @theme directive lives inline below.
-    "config.rasi".content = lib.mkForce ''
-      configuration {
-          drun-display-format: "{name}";
-          timeout {
-              action: "kb-cancel";
-              delay:  0;
-          }
-          filebrowser {
-              directories-first: true;
-              sorting-method:    "name";
-          }
-      }
+        @theme "custom.rasi"
+      '';
 
-      @theme "custom.rasi"
-    '';
-
-    # Placed at $out/custom.rasi, sibling of the generated $out/rofi-config.rasi,
-    # so rofi resolves the relative `@theme "custom.rasi"` against the config dir.
-    constructFiles.customTheme = {
-      relPath = "custom.rasi";
-      content = ''
+      customRasi = pkgs.writeText "custom.rasi" ''
         * {
             foreground:  ${colors.base07};
             background:  ${colors.base00};
@@ -137,6 +124,19 @@
             padding: 1em;
         }
       '';
-    };
-  };
+
+      rofiConfig = pkgs.linkFarm "rofi-config" [
+        { name = "config.rasi"; path = configRasi; }
+        { name = "custom.rasi"; path = customRasi; }
+      ];
+    in
+      pkgs.symlinkJoin {
+        name = "rofi";
+        paths = [ pkgs.rofi ];
+        nativeBuildInputs = [ pkgs.makeWrapper ];
+        postBuild = ''
+          wrapProgram $out/bin/rofi \
+            --add-flags "-config ${rofiConfig}/config.rasi"
+        '';
+      };
 }

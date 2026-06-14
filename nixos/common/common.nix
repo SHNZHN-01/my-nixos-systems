@@ -14,6 +14,7 @@
       self.nixosModules.nix
       self.nixosModules.preferences
       self.nixosModules.networking
+      self.nixosModules.theme
     ];
 
     # systemd.services.sbctl-enroll = {

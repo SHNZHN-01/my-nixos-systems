@@ -1,7 +1,10 @@
 { self, inputs, ... }: {
-  flake.nixosModules.desktop = { config, pkgs, ... }: 
+  flake.nixosModules.desktop = { config, pkgs, ... }:
   let
     wrapped = self.packages.${pkgs.system};
+    alacritty = self.lib.makeAlacritty { inherit pkgs; font = config.theme.font; colors = config.theme.colors; };
+    polybar   = self.lib.makePolybar   { inherit pkgs; font = config.theme.font; colors = config.theme.colors; };
+    rofi      = self.lib.makeRofi      { inherit pkgs; font = config.theme.font; colors = config.theme.colors; };
     dircolors = pkgs.writeText "dircolors" ''
     COLORTERM ?*
     TERM Eterm
@@ -207,6 +210,11 @@
         '';
     };
 
+    services.pipewire = {
+      enable = true;
+      pulse.enable = true;
+    };
+
     fonts.packages = with pkgs; [
         nerd-fonts.jetbrains-mono
         nerd-fonts.terminess-ttf
@@ -241,11 +249,7 @@
         ungoogled-chromium
         firefox
         burpsuite
-    ] ++ (with wrapped; [
-        alacritty
-        polybar
-        rofi
-    ]) ++ [
+    ] ++ [ alacritty polybar rofi ] ++ [
       inputs.neovim-shnzhn.packages.${pkgs.system}.neovim-shnzhn
     ];
 

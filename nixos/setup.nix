@@ -1,9 +1,16 @@
-{self, inputs, lib, ... }: {
+{ inputs, lib, ... }: {
   imports = [
     inputs.wrapper-modules.flakeModules.wrappers
   ];
 
-  #flake.nixosModules = builtins.mapAttrs(_: v: v.install) self.wrappers;
+  options.flake.lib = lib.mkOption {
+    type    = lib.types.lazyAttrsOf lib.types.raw;
+    default = {};
+  };
 
-  systems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
+  config = {
+    #flake.nixosModules = builtins.mapAttrs(_: v: v.install) self.wrappers;
+
+    systems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
+  };
 }

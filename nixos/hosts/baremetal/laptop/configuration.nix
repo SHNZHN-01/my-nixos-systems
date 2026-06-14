@@ -15,13 +15,16 @@
             self.diskoConfigurations.laptop
         ];
 
+        theme.font.alacritty_size = 11.5;
+        theme.font.polybar_size = 11;
+        theme.font.rofi_size = 11;
+
         services.libinput.enable = true;
 
         boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usbhid" "usb_storage" "sd_mod" ];
         boot.initrd.kernelModules = [ "dm-snapshot" ];
         boot.kernelModules = [ "kvm-amd" ];
         boot.extraModulePackages = [ ];
-
 
         boot.initrd.luks.devices = {
             "crypted-laptop" = {

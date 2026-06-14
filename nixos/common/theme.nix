@@ -59,5 +59,20 @@ in
 {
   flake = {
     inherit colors colorsNoHash font;
+
+    nixosModules.theme = { lib, ... }: {
+      options.theme = {
+        font = {
+          name           = lib.mkOption { type = lib.types.str;   default = font.name; };
+          alacritty_size = lib.mkOption { type = lib.types.float; default = font.alacritty_size; };
+          polybar_size   = lib.mkOption { type = lib.types.int;   default = font.polybar_size; };
+          rofi_size      = lib.mkOption { type = lib.types.int;   default = font.rofi_size; };
+        };
+        colors = lib.mkOption {
+          type    = lib.types.attrsOf lib.types.str;
+          default = colors;
+        };
+      };
+    };
   };
 }
