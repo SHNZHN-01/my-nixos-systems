@@ -1,3 +1,6 @@
+# TODO: create bootable.nix
+# TOOD: handle the creation and deletion of Windows, Mac and Linux VMs using nix
+#
 # This file generates the configurations for each of our hosts installer ISOs.
 #
 # It will read our nixosConfigurations and derive the names from there. Ignoring
