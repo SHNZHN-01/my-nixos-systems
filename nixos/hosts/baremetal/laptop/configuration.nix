@@ -2,11 +2,11 @@
     flake.nixosConfigurations.laptop = inputs.nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-            self.nixosModules.desktopConfiguration
+            self.nixosModules.laptop
         ];
     };
 
-    flake.nixosModules.pc = { pkgs, lib, config, ... }: {
+    flake.nixosModules.laptop = { pkgs, lib, config, ... }: {
         imports = [ 
             self.nixosModules.common
             self.nixosModules.desktop
