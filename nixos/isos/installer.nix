@@ -65,7 +65,6 @@ let
         clear
 
         echo "===> Waiting for network..."
-        systemctl is-active --wait network-online.target &>/dev/null
         until ping -c1 cache.nixos.org &>/dev/null; do
           sleep 2
         done

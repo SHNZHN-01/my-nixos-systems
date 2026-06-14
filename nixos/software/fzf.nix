@@ -1,4 +1,3 @@
-# nix/utils/fzf.nix — builds the package, it doesn't end up in nixosModules (no install)
 { self, ... }: {
   perSystem = { pkgs, ... }: {
     wrappers.packages.fzf = true;

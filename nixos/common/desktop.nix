@@ -221,6 +221,7 @@
         fixedsys-excelsior
     ];
 
+    # TODO: move some of the packages here into different .nix files
     users.users.${config.username}.packages = with pkgs; [
         xinit
         btop
