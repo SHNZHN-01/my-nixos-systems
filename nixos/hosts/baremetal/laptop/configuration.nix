@@ -30,7 +30,7 @@
             };
         };
 
-        hardware.cpu.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+        hardware.cpu.amd.updateMicrocode = true;
 
         networking.hostName = "laptop";
 

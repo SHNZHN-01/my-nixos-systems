@@ -15,6 +15,8 @@
             self.diskoConfigurations.pc
         ];
 
+        networking.hostName = "computer";
+
         boot.initrd.availableKernelModules = [ "ata_piix" "ohci_pci" "ehci_pci" "ahci" "sd_mod" "sr_mod" ];
         boot.initrd.kernelModules = [ ];
         boot.kernelModules = [ ];
@@ -46,7 +48,8 @@
             "/crypto_keyfile.bin" = "/secrets/crypto_keyfile.bin";
         };
 
-        networking.hostName = "computer";
+
+        hardware.cpu.intel.updateMicrocode = true;
 
         nixpkgs.hostPlatform = "x86_64-linux";
         system.stateVersion = "26.05";
