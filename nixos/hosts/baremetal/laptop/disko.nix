@@ -9,7 +9,7 @@
           content = {
             type = "gpt";
             partitions = {
-              ESP = {
+              esp = {
                 size = "512M";
                 type = "EF00";
                 content = {
@@ -20,7 +20,7 @@
                 };
               };
 
-              luks = {
+              root = {
                 size = "100%";
                 content = {
                   type = "luks";
