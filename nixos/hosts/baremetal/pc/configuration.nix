@@ -46,7 +46,12 @@
         };
 
 
-        hardware.cpu.intel.updateMicrocode = true;
+        hardware = {
+            cpu.intel.updateMicrocode = true;
+            graphics.enable = true;
+            nvidia.open = true;
+        };
+        services.xserver.videoDrivers = [ "nvidia" ];
 
         nixpkgs.hostPlatform = "x86_64-linux";
         system.stateVersion = "26.05";
