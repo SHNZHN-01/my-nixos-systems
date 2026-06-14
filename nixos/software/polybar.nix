@@ -36,10 +36,10 @@
           module-margin      = 1;
           separator          = "|";
           separator-foreground = "\${colors.dimmed}";
-          font-0 = "${font.name}:pixelsize=${toString font.polybar_size}:style=Regular;2";
+          font-0 = "${font.name}:pixelsize=${toString font.polybar_size}:antialias:true:style=Regular;2";
           modules-left   = "xworkspaces";
           modules-center = "";
-          modules-right  = "filesystem pulseaudio memory cpu eth date";
+          modules-right  = "home_filesystem nix_filesystem root_filesystem pulseaudio memory cpu eth dunst date";
           cursor-click   = "pointer";
           cursor-scroll  = "ns-resize";
           enable-ipc     = true;
@@ -61,10 +61,28 @@
           label-empty-padding     = 1;
         };
 
-        "module/filesystem" = {
+        "module/root_filesystem" = {
           type     = "internal/fs";
           interval = 25;
           mount-0  = "/";
+          label-mounted = "%{F#F0C674}%mountpoint%%{F-} %used% of %total%";
+          label-unmounted = "%mountpoint% not mounted";
+          label-unmounted-foreground = "\${colors.disabled}";
+        };
+
+        "module/nix_filesystem" = {
+          type     = "internal/fs";
+          interval = 25;
+          mount-0  = "/nix";
+          label-mounted = "%{F#F0C674}%mountpoint%%{F-} %used% of %total%";
+          label-unmounted = "%mountpoint% not mounted";
+          label-unmounted-foreground = "\${colors.disabled}";
+        };
+
+        "module/home_filesystem" = {
+          type     = "internal/fs";
+          interval = 25;
+          mount-0  = "/home";
           label-mounted = "%{F#F0C674}%mountpoint%%{F-} %used% of %total%";
           label-unmounted = "%mountpoint% not mounted";
           label-unmounted-foreground = "\${colors.disabled}";
@@ -95,9 +113,9 @@
         "module/cpu" = {
           type     = "internal/cpu";
           interval = 2;
-          format-prefix            = "CPU";
+          format-prefix            = "CPU ";
           format-prefix-foreground = "\${colors.foreground}";
-          label = "%percentage:2%%";
+          label = "%percentage:3%%";
         };
 
         "network-base" = {
@@ -130,6 +148,15 @@
           format-prefix-foreground = "\${colors.foreground}";
           label = "%date%";
         };
+
+        # "module/dunst" = {
+        #     type = "custom/ipc";
+        #     initial = 1;
+        #     format-foreground = "\${colors.foreground}";
+        #
+        #     hook-0 = "echo \"%{A1:dunstctl set-paused true && polybar-msg hook dunst 2:}%{A}\" &";
+        #     hook-1 = "echo \"%{A1:dunstctl set-paused false && polybar-msg hook dunst 1:}%{A}\" &";
+        # };
 
         settings = {
           screenchange-reload = true;

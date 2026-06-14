@@ -199,7 +199,6 @@
         package = wrapped.i3; 
         extraPackages = with pkgs; [
             i3lock
-            i3blocks
         ];
     };
     services.xserver.displayManager.startx = {
@@ -221,8 +220,36 @@
         fixedsys-excelsior
     ];
 
+    qt = {
+      enable = true;
+      platformTheme = "qt5ct";   # or "kde"
+      style = "kvantum";          # sets QT_STYLE_OVERRIDE=kvantum + pulls in the qt5/qt6 plugins
+    };
+
+    environment.systemPackages = [
+      (pkgs.catppuccin-kvantum.override { accent = "blue"; variant = "mocha"; })
+    ];
+
+    environment.sessionVariables.GTK_THEME = "Adwaita:dark";
+
+    environment.etc."xdg/Kvantum/kvantum.kvconfig".text = ''
+      [General]
+      theme=Catppuccin-Mocha-Blue
+    '';
+
+    xdg.portal = {
+      enable = true;
+      extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+      config.common.default = "*";
+    };
+
+    programs.dconf.enable = true;
+    programs.dconf.profiles.user.databases = [{
+      settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+    }];
+
     # TODO: move some of the packages here into different .nix files
-    # TODO: add dunst, binary ninja
+    # TODO: add binary ninja
     users.users.${config.username}.packages = with pkgs; [
         xinit
         btop
@@ -233,12 +260,14 @@
         dtach
         ueberzugpp
         zathura
+        dunst
         eza
         gh
         gdb
         xclip
         veracrypt
         keepassxc
+        flameshot
         gcc
         clang
         gnumake
