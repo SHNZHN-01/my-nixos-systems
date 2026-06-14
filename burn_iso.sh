@@ -14,6 +14,6 @@ echo "     THIS WILL DESTROY ALL DATA ON ${DEVICE}"
 read -rp "     Are you sure? [y/N] " confirm
 [[ "$confirm" == [yY] ]] || exit 1
 
-dd if="$ISO" of="$DEVICE" bs=4M status=progress oflag=sync
+sudo dd if="$ISO" of="$DEVICE" bs=4M status=progress oflag=sync
 
 echo "===> Done"
