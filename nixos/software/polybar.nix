@@ -1,3 +1,4 @@
+# TODO: add the chinese font to theme.nix
 { self, ... }: {
   flake.lib.makePolybar = { pkgs, font, colors }: let
     soundScript = pkgs.writeShellScript "polybar-sound" ''
