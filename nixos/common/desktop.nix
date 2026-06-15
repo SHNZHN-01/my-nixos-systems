@@ -196,6 +196,7 @@
         self.nixosModules.keybinds
         self.nixosModules.firefox
         self.nixosModules.fcitx5
+        self.nixosModules.formatter
     ];
 
     programs.keybinds.enable = true;

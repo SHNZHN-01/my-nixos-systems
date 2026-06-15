@@ -1,9 +1,11 @@
 { ... }: {
-  flake.nixosModules.virtualized = { config, lib, ... }:
+  flake.nixosModules.virtualized =
+    { config, lib, ... }:
     let
       username = config.username;
       host = config.platform;
-    in {
+    in
+    {
       virtualisation.virtualbox.guest.enable = true;
       virtualisation.virtualbox.guest.dragAndDrop = true;
       users.users.${username}.extraGroups = [ "vboxsf" ];
