@@ -243,8 +243,8 @@
 
     qt = {
       enable = true;
-      platformTheme = "qt5ct";   # or "kde"
-      style = "kvantum";          # sets QT_STYLE_OVERRIDE=kvantum + pulls in the qt5/qt6 plugins
+      platformTheme = "qt5ct";
+      style = "kvantum";
     };
 
     environment.systemPackages = [
@@ -297,6 +297,7 @@
         python3
         discord
         spotify
+        playerctl
         whatsapp-electron
         telegram-desktop
         aflplusplus

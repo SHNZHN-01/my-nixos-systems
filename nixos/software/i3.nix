@@ -23,10 +23,14 @@
 
         bindsym $mod+r exec --no-startup-id rofi -show drun 
         bindsym $mod+Shift+r exec --no-startup-id rofi -show combi 
-        bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
-        bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
-        bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-        bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+        bindsym XF86AudioRaiseVolume exec --no-startup-id wpctl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
+        bindsym XF86AudioLowerVolume exec --no-startup-id wpctl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
+        bindsym XF86AudioMute exec --no-startup-id wpctl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+        bindsym XF86AudioMicMute exec --no-startup-id wpctl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+        bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
+        bindsym XF86AudioNext exec --no-startup-id playerctl next 
+        bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 
         for_window [class="floatmixer"] floating enable, resize set 900 550, move position center
         bindsym $mod+Shift+v exec --no-startup-id alacritty --class floatmixer -e wiremix
