@@ -1,12 +1,12 @@
 { self, inputs, ... }: {
-    flake.nixosConfigurations.pc = inputs.nixpkgs.lib.nixosSystem {
+    flake.nixosConfigurations.computer = inputs.nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-            self.nixosModules.pc
+            self.nixosModules.computer
         ];
     };
 
-    flake.nixosModules.pc = { pkgs, lib, config, ... }: let
+    flake.nixosModules.computer = { pkgs, lib, config, ... }: let
         xresources = pkgs.writeText "Xresources" ''
             Xft.dpi: 96
         '';

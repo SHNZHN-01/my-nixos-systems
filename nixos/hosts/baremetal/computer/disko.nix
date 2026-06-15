@@ -1,5 +1,5 @@
 {
-  flake.diskoConfigurations.pc = {
+  flake.diskoConfigurations.computer = {
     disko.devices = {
       disk = {
         nixos = {
