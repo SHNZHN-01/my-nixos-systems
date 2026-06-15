@@ -194,10 +194,16 @@
   in {
     imports = [
         self.nixosModules.keybinds
+        self.nixosModules.firefox
     ];
 
     programs.keybinds.enable = true;
 
+    services.unclutter = {
+        enable = true;
+        timeout = 5;
+        keystroke = true;
+    };
     services.xserver.enable = true;
     services.xserver.autorun = false;
     services.xserver.windowManager.i3 = {
@@ -260,6 +266,7 @@
 
     # TODO: move some of the packages here into different .nix files
     # TODO: add binary ninja
+    # TODO: handle bat theme
     users.users.${config.username}.packages = with pkgs; [
         xinit
         btop
@@ -327,13 +334,14 @@
         go
         docker
         qemu_full
+        # binaryninja-free
         virtualbox
         firefox
         google-chrome
         ungoogled-chromium
     ] ++ [ alacritty polybar rofi ] ++ [
       inputs.neovim-shnzhn.packages.${pkgs.stdenv.hostPlatform.system}.neovim-shnzhn
-      inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+      # inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];
 
     nixpkgs.config.android_sdk.accept_license = true;

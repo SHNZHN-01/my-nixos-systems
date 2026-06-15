@@ -82,11 +82,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1781362862,
-        "narHash": "sha256-SWJtxc1+OkrWM7+MI/M9YXJkpy1ydG9XbDK126oAqck=",
+        "lastModified": 1781471604,
+        "narHash": "sha256-l5rNWlauCMYkxWYQ1in+t7nxF3W75Fgbjug0AxOZmGw=",
         "owner": "SHNZHN-01",
         "repo": "my-neovim-config",
-        "rev": "fddb0fa17f2f2a05abb4689aa7dc2cfe81faed2b",
+        "rev": "24c93d96eee2e06d9516be9c124094c7c382299c",
         "type": "github"
       },
       "original": {
@@ -149,8 +149,7 @@
         "import-tree": "import-tree",
         "neovim-shnzhn": "neovim-shnzhn",
         "nixpkgs": "nixpkgs",
-        "wrapper-modules": "wrapper-modules",
-        "zen-browser": "zen-browser"
+        "wrapper-modules": "wrapper-modules"
       }
     },
     "wrapper-modules": {
@@ -168,26 +167,6 @@
       "original": {
         "owner": "BirdeeHub",
         "repo": "nix-wrapper-modules",
-        "type": "github"
-      }
-    },
-    "zen-browser": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1781415399,
-        "narHash": "sha256-t7l/1scSsVAlw1r/vjEIX+SquZa/z6ibcOLBuXdJH7E=",
-        "owner": "youwen5",
-        "repo": "zen-browser-flake",
-        "rev": "83ab3c3da2ba1a76a20882dbd253711d2cb8dcba",
-        "type": "github"
-      },
-      "original": {
-        "owner": "youwen5",
-        "repo": "zen-browser-flake",
         "type": "github"
       }
     }

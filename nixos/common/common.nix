@@ -42,6 +42,10 @@
       sbctl
     ];
 
+    fonts.packages = with pkgs; [
+        terminus_font
+    ];
+
     users.users.${config.username}.packages = with pkgs; [
         tree
         vim

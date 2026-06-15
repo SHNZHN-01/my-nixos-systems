@@ -62,7 +62,7 @@
           font-0 = "${font.name}:pixelsize=${toString font.polybar_size}:antialias:true:style=Regular;2";
           modules-left   = "xworkspaces";
           modules-center = "";
-          modules-right  = "home_filesystem nix_filesystem root_filesystem pipewire memory cpu eth date";
+          modules-right  = "home_filesystem nix_filesystem root_filesystem memory cpu eth pipewire date";
           cursor-click   = "pointer";
           cursor-scroll  = "ns-resize";
           enable-ipc     = true;

@@ -105,7 +105,7 @@
 
         bindsym $mod+Shift+e mode "logout"
         mode "logout" {
-          bindsym l exec i3lock --ignore-empty-password -t 2>/dev/null; mode "default"
+          bindsym l exec i3lock --ignore-empty-password -t -p $HOME/pictures/lockscreen.png 2>/dev/null; mode "default"
           bindsym e exec "i3-msg exit"
           bindsym Escape mode "default"
           bindsym Return mode "default"
