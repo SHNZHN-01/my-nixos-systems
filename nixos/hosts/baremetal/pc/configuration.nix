@@ -6,7 +6,11 @@
         ];
     };
 
-    flake.nixosModules.pc = { pkgs, lib, config, ... }: {
+    flake.nixosModules.pc = { pkgs, lib, config, ... }: let
+        xresources = pkgs.writeText "Xresources" ''
+            Xft.dpi: 96
+        '';
+    in {
         imports = [ 
             self.nixosModules.common
             self.nixosModules.desktop
@@ -18,7 +22,8 @@
         networking.hostName = "computer";
 
         services.xserver.displayManager.startx.extraCommands = ''
-            ${pkgs.xrandr}/bin/xrandr --output HDMI-0 --mode 1920x1080 --rotate left --pos 0x0 --output DP-4 --mode 1920x1080 --rotate normal --primary --pos 1080x0
+            xrandr --output HDMI-0 --mode 1920x1080 --rotate left --pos 0x0 --output DP-4 --mode 1920x1080 --rotate normal --primary --pos 1080x0
+            xrdb -merge ${xresources}
         '';
 
         boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "sd_mod" ];

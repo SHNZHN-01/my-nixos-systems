@@ -219,7 +219,7 @@
         enable = true;
         generateScript = true;
         extraCommands = ''
-            polybar main 2>&1 | tee -a /tmp/polybar.log & disown
+          polybar main 2>&1 | tee -a /tmp/polybar.log & disown
         '';
     };
 
