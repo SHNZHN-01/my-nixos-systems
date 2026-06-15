@@ -273,6 +273,7 @@
     # TODO: add binary ninja
     # TODO: handle bat theme
     users.users.${config.username}.packages = with pkgs; [
+        xev
         xinit
         btop
         git

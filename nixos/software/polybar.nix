@@ -65,7 +65,7 @@
 
           modules-left   = "xworkspaces";
           modules-center = "";
-          modules-right  = "home_filesystem nix_filesystem root_filesystem memory cpu eth pipewire fcitx date";
+          modules-right  = "home_filesystem nix_filesystem root_filesystem memory cpu eth pipewire date";
           cursor-click   = "pointer";
           cursor-scroll  = "ns-resize";
           enable-ipc     = true;
