@@ -299,8 +299,6 @@
         discord
         spotify
         playerctl
-        whatsapp-electron
-        telegram-desktop
         aflplusplus
         # python313Packages.setuptools
         # python313Packages.setuptools-scm
