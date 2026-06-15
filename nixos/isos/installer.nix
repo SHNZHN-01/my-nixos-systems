@@ -11,16 +11,26 @@
 # one with #laptop as their targets.
 #
 # Example build command: `nix build .#nixosConfigurations.iso-testing.config.system.build.isoImage`
-{ self, inputs, config, lib, ... }:
+{
+  self,
+  inputs,
+  config,
+  lib,
+  ...
+}:
 let
   hostsDir = ../hosts;
   groups = lib.filterAttrs (_: t: t == "directory") (builtins.readDir hostsDir);
-  realHosts = lib.concatLists (lib.mapAttrsToList
-    (group: _:
-      builtins.attrNames
-        (lib.filterAttrs (n: t: t == "directory" && !(lib.hasPrefix "_" n))
-          (builtins.readDir (hostsDir + "/${group}"))))
-    groups);
+  realHosts = lib.concatLists (
+    lib.mapAttrsToList (
+      group: _:
+      builtins.attrNames (
+        lib.filterAttrs (n: t: t == "directory" && !(lib.hasPrefix "_" n)) (
+          builtins.readDir (hostsDir + "/${group}")
+        )
+      )
+    ) groups
+  );
 
   # ── LUKS helpers ──────────────────────────────────────────────────────────
   #
@@ -32,27 +42,37 @@ let
   # We sort by name to get a stable index, matching how disko/parted lays them out.
   # NOTE: if your partitions have a specific order that doesn't match alphabetical,
   # override this with an explicit list in the host config instead.
-  getLuksPartitions = disks:
-    lib.concatLists (lib.mapAttrsToList (_diskName: disk:
-      let
-        partitions   = disk.content.partitions or {};
-        # attrNames returns keys in alphabetical order — same order disko uses
-        partNames    = builtins.attrNames partitions;
-        # zip each partition name with its 1-based index
-        indexed      = lib.imap1 (i: name: { inherit i name; }) partNames;
-        luksEntries  = builtins.filter
-          (entry: (partitions.${entry.name}.content.type or "") == "luks")
-          indexed;
-        baseDevice   = disk.device;
-      in
+  getLuksPartitions =
+    disks:
+    lib.concatLists (
+      lib.mapAttrsToList (
+        _diskName: disk:
+        let
+          partitions = disk.content.partitions or { };
+          # attrNames returns keys in alphabetical order — same order disko uses
+          partNames = builtins.attrNames partitions;
+          # zip each partition name with its 1-based index
+          indexed = lib.imap1 (i: name: { inherit i name; }) partNames;
+          luksEntries = builtins.filter (
+            entry: (partitions.${entry.name}.content.type or "") == "luks"
+          ) indexed;
+          baseDevice = disk.device;
+        in
         map (entry: "${baseDevice}-part${toString entry.i}") luksEntries
-    ) disks);
+      ) disks
+    );
 
-  mkIsoConfiguration = hostname:
-    { pkgs, config, modulesPath, ... }:
+  mkIsoConfiguration =
+    hostname:
+    {
+      pkgs,
+      config,
+      modulesPath,
+      ...
+    }:
     let
-      username   = self.nixosConfigurations.${hostname}.config.username;
-      disks      = self.nixosConfigurations.${hostname}.config.disko.devices.disk or {};
+      username = self.nixosConfigurations.${hostname}.config.username;
+      disks = self.nixosConfigurations.${hostname}.config.disko.devices.disk or { };
       luksDevices = getLuksPartitions disks;
 
       # Only generate/enroll a keyfile if there are multiple LUKS containers.
@@ -61,7 +81,7 @@ let
 
       # The first LUKS device is the primary one (unlocked interactively).
       # The rest are enrolled with the keyfile.
-      secondaryDevices = if needsKeyfile then builtins.tail luksDevices else [];
+      secondaryDevices = if needsKeyfile then builtins.tail luksDevices else [ ];
 
       installer = pkgs.writeShellScript "auto-install" ''
         #set -euo pipefail
@@ -80,16 +100,16 @@ let
         disko --mode destroy,format,mount --flake ${self}#${hostname}
 
         ${lib.optionalString needsKeyfile ''
-        echo "===> Generating LUKS keyfile for secondary volumes"
-        mkdir -p /mnt/secrets
-        dd if=/dev/urandom of=/mnt/secrets/crypto_keyfile.bin bs=512 count=4
-        chmod 400 /mnt/secrets/crypto_keyfile.bin
-        chown root:root /mnt/secrets/crypto_keyfile.bin
+          echo "===> Generating LUKS keyfile for secondary volumes"
+          mkdir -p /mnt/secrets
+          dd if=/dev/urandom of=/mnt/secrets/crypto_keyfile.bin bs=512 count=4
+          chmod 400 /mnt/secrets/crypto_keyfile.bin
+          chown root:root /mnt/secrets/crypto_keyfile.bin
 
-        echo "===> Enrolling keyfile — you will be prompted for your LUKS passphrase once per device"
-        ${lib.concatMapStringsSep "\n" (dev: ''
-          cryptsetup luksAddKey ${dev} /mnt/secrets/crypto_keyfile.bin
-        '') secondaryDevices}
+          echo "===> Enrolling keyfile — you will be prompted for your LUKS passphrase once per device"
+          ${lib.concatMapStringsSep "\n" (dev: ''
+            cryptsetup luksAddKey ${dev} /mnt/secrets/crypto_keyfile.bin
+          '') secondaryDevices}
         ''}
 
         echo "===> Generating Secure Boot keys"
@@ -118,7 +138,8 @@ let
         clear
         reboot
       '';
-    in {
+    in
+    {
       imports = [
         "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
         self.nixosModules.nix
@@ -143,13 +164,18 @@ let
       ];
     };
 
-  mkInstallerIso = hostname: inputs.nixpkgs.lib.nixosSystem {
-    system = "x86_64-linux";
-    modules = [ (mkIsoConfiguration hostname) ];
-  };
-in {
-  flake.nixosConfigurations = lib.listToAttrs (map (h: {
-    name = "iso-${h}";
-    value = mkInstallerIso h;
-  }) realHosts);
+  mkInstallerIso =
+    hostname:
+    inputs.nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [ (mkIsoConfiguration hostname) ];
+    };
+in
+{
+  flake.nixosConfigurations = lib.listToAttrs (
+    map (h: {
+      name = "iso-${h}";
+      value = mkInstallerIso h;
+    }) realHosts
+  );
 }

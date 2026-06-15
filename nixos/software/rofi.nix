@@ -1,5 +1,10 @@
 { ... }: {
-  flake.lib.makeRofi = { pkgs, font, colors }:
+  flake.lib.makeRofi =
+    {
+      pkgs,
+      font,
+      colors,
+    }:
     let
       configRasi = pkgs.writeText "config.rasi" ''
         configuration {
@@ -126,17 +131,23 @@
       '';
 
       rofiConfig = pkgs.linkFarm "rofi-config" [
-        { name = "config.rasi"; path = configRasi; }
-        { name = "custom.rasi"; path = customRasi; }
+        {
+          name = "config.rasi";
+          path = configRasi;
+        }
+        {
+          name = "custom.rasi";
+          path = customRasi;
+        }
       ];
     in
-      pkgs.symlinkJoin {
-        name = "rofi";
-        paths = [ pkgs.rofi ];
-        nativeBuildInputs = [ pkgs.makeWrapper ];
-        postBuild = ''
-          wrapProgram $out/bin/rofi \
-            --add-flags "-config ${rofiConfig}/config.rasi"
-        '';
-      };
+    pkgs.symlinkJoin {
+      name = "rofi";
+      paths = [ pkgs.rofi ];
+      nativeBuildInputs = [ pkgs.makeWrapper ];
+      postBuild = ''
+        wrapProgram $out/bin/rofi \
+          --add-flags "-config ${rofiConfig}/config.rasi"
+      '';
+    };
 }

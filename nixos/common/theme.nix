@@ -49,10 +49,12 @@ let
     # rofi_size = 12;
   };
 
-  stripHash = str:
-    if builtins.substring 0 1 str == "#"
-    then builtins.substring 1 (builtins.stringLength str - 1) str
-    else str;
+  stripHash =
+    str:
+    if builtins.substring 0 1 str == "#" then
+      builtins.substring 1 (builtins.stringLength str - 1) str
+    else
+      str;
 
   colorsNoHash = builtins.mapAttrs (_: v: stripHash v) colors;
 in
@@ -63,13 +65,25 @@ in
     nixosModules.theme = { lib, ... }: {
       options.theme = {
         font = {
-          name           = lib.mkOption { type = lib.types.str;   default = font.name; };
-          alacritty_size = lib.mkOption { type = lib.types.float; default = font.alacritty_size; };
-          polybar_size   = lib.mkOption { type = lib.types.int;   default = font.polybar_size; };
-          rofi_size      = lib.mkOption { type = lib.types.int;   default = font.rofi_size; };
+          name = lib.mkOption {
+            type = lib.types.str;
+            default = font.name;
+          };
+          alacritty_size = lib.mkOption {
+            type = lib.types.float;
+            default = font.alacritty_size;
+          };
+          polybar_size = lib.mkOption {
+            type = lib.types.int;
+            default = font.polybar_size;
+          };
+          rofi_size = lib.mkOption {
+            type = lib.types.int;
+            default = font.rofi_size;
+          };
         };
         colors = lib.mkOption {
-          type    = lib.types.attrsOf lib.types.str;
+          type = lib.types.attrsOf lib.types.str;
           default = colors;
         };
       };

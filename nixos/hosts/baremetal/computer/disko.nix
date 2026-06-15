@@ -3,7 +3,7 @@
     disko.devices = {
       disk = {
         nixos = {
-          type   = "disk";
+          type = "disk";
           device = "/dev/disk/by-path/pci-0000:05:00.0-nvme-1";
           content = {
             type = "gpt";
@@ -12,8 +12,8 @@
                 size = "512M";
                 type = "EF00";
                 content = {
-                  type       = "filesystem";
-                  format     = "vfat";
+                  type = "filesystem";
+                  format = "vfat";
                   mountpoint = "/boot";
                   mountOptions = [ "umask=0077" ];
                 };
@@ -29,7 +29,7 @@
                   };
                   content = {
                     type = "lvm_pv";
-                    vg   = "vg_nixos";
+                    vg = "vg_nixos";
                   };
                 };
               };
@@ -38,7 +38,7 @@
         };
 
         storage = {
-          type   = "disk";
+          type = "disk";
           device = "/dev/disk/by-path/pci-0000:00:17.0-ata-4";
           content = {
             type = "gpt";
@@ -53,7 +53,7 @@
                   };
                   content = {
                     type = "lvm_pv";
-                    vg   = "vg_storage";
+                    vg = "vg_storage";
                   };
                 };
               };
@@ -62,7 +62,7 @@
         };
 
         vms = {
-          type   = "disk";
+          type = "disk";
           device = "/dev/disk/by-path/pci-0000:02:00.0-nvme-1";
           content = {
             type = "gpt";
@@ -77,7 +77,7 @@
                   };
                   content = {
                     type = "lvm_pv";
-                    vg   = "vg_vms";
+                    vg = "vg_vms";
                   };
                 };
               };
@@ -95,8 +95,8 @@
             lv_root = {
               size = "65G";
               content = {
-                type       = "filesystem";
-                format     = "ext4";
+                type = "filesystem";
+                format = "ext4";
                 mountpoint = "/";
                 mountOptions = [ "defaults" ];
               };
@@ -105,8 +105,8 @@
             lv_nix = {
               size = "200G";
               content = {
-                type       = "filesystem";
-                format     = "ext4";
+                type = "filesystem";
+                format = "ext4";
                 mountpoint = "/nix";
                 mountOptions = [ "noatime" ];
               };
@@ -116,8 +116,8 @@
               # ~200G
               size = "100%FREE";
               content = {
-                type       = "filesystem";
-                format     = "ext4";
+                type = "filesystem";
+                format = "ext4";
                 mountpoint = "/home";
                 mountOptions = [ "defaults" ];
               };
@@ -139,8 +139,8 @@
             lv_games = {
               size = "1500G";
               content = {
-                type       = "filesystem";
-                format     = "ext4";
+                type = "filesystem";
+                format = "ext4";
                 mountpoint = "/data/games";
                 mountOptions = [ "defaults" ];
               };
@@ -149,8 +149,8 @@
             lv_audio = {
               size = "1000G";
               content = {
-                type       = "filesystem";
-                format     = "ext4";
+                type = "filesystem";
+                format = "ext4";
                 mountpoint = "/data/audio";
                 mountOptions = [ "defaults" ];
               };
@@ -159,8 +159,8 @@
             lv_blender = {
               size = "600G";
               content = {
-                type       = "filesystem";
-                format     = "ext4";
+                type = "filesystem";
+                format = "ext4";
                 mountpoint = "/data/blender";
                 mountOptions = [ "defaults" ];
               };
@@ -170,8 +170,8 @@
               # ~500G
               size = "100%FREE";
               content = {
-                type       = "filesystem";
-                format     = "ext4";
+                type = "filesystem";
+                format = "ext4";
                 mountpoint = "/data/video";
                 mountOptions = [ "defaults" ];
               };
@@ -185,8 +185,8 @@
             lv_vms = {
               size = "100%FREE";
               content = {
-                type       = "filesystem";
-                format     = "ext4";
+                type = "filesystem";
+                format = "ext4";
                 mountpoint = "/vms";
                 mountOptions = [ "defaults" ];
               };

@@ -4,7 +4,7 @@
       disk = {
 
         nvme0n1 = {
-          type   = "disk";
+          type = "disk";
           device = "/dev/disk/by-path/pci-0000:03:00.0-nvme-1";
           content = {
             type = "gpt";
@@ -13,8 +13,8 @@
                 size = "512M";
                 type = "EF00";
                 content = {
-                  type       = "filesystem";
-                  format     = "vfat";
+                  type = "filesystem";
+                  format = "vfat";
                   mountpoint = "/boot";
                   mountOptions = [ "umask=0077" ];
                 };
@@ -30,7 +30,7 @@
                   };
                   content = {
                     type = "lvm_pv";
-                    vg   = "vg_laptop";
+                    vg = "vg_laptop";
                   };
                 };
               };
@@ -54,8 +54,8 @@
             lv_root = {
               size = "100%FREE";
               content = {
-                type       = "filesystem";
-                format     = "ext4";
+                type = "filesystem";
+                format = "ext4";
                 mountpoint = "/";
                 mountOptions = [ "defaults" ];
               };
