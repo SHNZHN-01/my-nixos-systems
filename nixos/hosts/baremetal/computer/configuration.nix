@@ -16,7 +16,7 @@
             self.nixosModules.desktop
 
             inputs.disko.nixosModules.disko
-            self.diskoConfigurations.pc
+            self.diskoConfigurations.computer
         ];
 
         networking.hostName = "computer";
