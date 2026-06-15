@@ -27,6 +27,12 @@
         for_window [class="floatmixer"] floating enable, resize set 900 550, move position center
         bindsym $mod+Shift+v exec --no-startup-id alacritty --class floatmixer -e wiremix
 
+        # Cycle forwards through tabs on the current monitor
+        bindsym $mod+comma focus right, focus parent, focus child
+
+        # Cycle backwards through tabs on the current monitor
+        bindsym $mod+period focus left, focus parent, focus child
+
         # change focus
         bindsym $mod+h focus left
         bindsym $mod+j focus up

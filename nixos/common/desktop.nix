@@ -195,6 +195,7 @@
     imports = [
         self.nixosModules.keybinds
         self.nixosModules.firefox
+        self.nixosModules.fcitx5
     ];
 
     programs.keybinds.enable = true;
@@ -206,6 +207,7 @@
     };
     services.xserver.enable = true;
     services.xserver.autorun = false;
+    services.xserver.xkb.options = "compose:ralt";
     services.xserver.windowManager.i3 = {
         enable = true;
         package = wrapped.i3; 
@@ -234,6 +236,9 @@
         nerd-fonts.jetbrains-mono
         nerd-fonts.terminess-ttf
         fixedsys-excelsior
+        noto-fonts-cjk-sans    # makes Chinese render everywhere via fallback (essential)
+        noto-fonts-cjk-serif   # optional, for serif/prose
+        sarasa-gothic          # monospace CJK for terminal + editor
     ];
 
     qt = {

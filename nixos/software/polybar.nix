@@ -59,13 +59,24 @@
           module-margin      = 1;
           separator          = "|";
           separator-foreground = "\${colors.dimmed}";
-          font-0 = "${font.name}:pixelsize=${toString font.polybar_size}:antialias:true:style=Regular;2";
+          font-0 = "${font.name}:size=${toString font.polybar_size}:antialias=true:style=Medium;2";
+          font-1 = "Sarasa Mono SC:size=${toString font.polybar_size}:antialias=true;2";
+
           modules-left   = "xworkspaces";
           modules-center = "";
-          modules-right  = "home_filesystem nix_filesystem root_filesystem memory cpu eth pipewire date";
+          modules-right  = "home_filesystem nix_filesystem root_filesystem memory cpu eth pipewire fcitx date";
           cursor-click   = "pointer";
           cursor-scroll  = "ns-resize";
           enable-ipc     = true;
+        };
+
+        "module/fcitx" = {
+            type = "custom/script";
+            exec = "fcitx5-remote -n | sed -e 's/^pinyin$/中/' -e 's/^keyboard-.*/en/'";
+            interval = 1;
+            format-prefix = " ";
+            click-left = "fcitx5-remote -t";
+            label = "%output%";
         };
 
         "module/xworkspaces" = {

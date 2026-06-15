@@ -12,12 +12,13 @@ let
     };
 
   defaultEntries = ''
-    Mod+w           | i3 - Tabbed layout
-    Mod+Alt+c       | i3 - Reload
-    Mod+Alt+r       | i3 - Restart
-    Mod+Ctrl+r      | i3 - Resize mode
-    Mod+Shift+r     | rofi - Run command mode
-    Mod+v           | misc - Open volume mixer
+    Mod+w               | i3 - Tabbed layout
+    Mod+Alt+c           | i3 - Reload
+    Mod+Alt+r           | i3 - Restart
+    Mod+Ctrl+r          | i3 - Resize mode
+    Mod+Shift+r         | rofi - Run command mode
+    Mod+v               | misc - Open volume mixer
+    Ctrl+Shift+Space    | term - Enter vim mode 
   '';
 in
 {

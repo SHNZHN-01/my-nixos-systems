@@ -17,6 +17,12 @@
       self.nixosModules.theme
     ];
 
+    console = {
+        font = "ter-v14n";
+        keyMap = "us";
+        # useXkbConfig = true; use xkb.options in tty.
+    };
+
     # systemd.services.sbctl-enroll = {
     #   description = "Enroll Secure Boot keys (once, if firmware is in Setup Mode)";
     #   wantedBy = [ "multi-user.target" ];
