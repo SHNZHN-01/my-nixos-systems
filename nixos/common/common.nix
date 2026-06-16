@@ -20,7 +20,7 @@
       ];
 
       console = {
-        font = "ter-v14n";
+        font = "Lat2-Terminus16";
         keyMap = "us";
         # useXkbConfig = true; use xkb.options in tty.
       };

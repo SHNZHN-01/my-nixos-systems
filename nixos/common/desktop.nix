@@ -238,6 +238,8 @@
         '';
       };
 
+      hardware.logitech.wireless.enable = true;
+      hardware.logitech.wireless.enableGraphical = true;
       services.pulseaudio.enable = false;
       security.rtkit.enable = true;
       services.pipewire = {
@@ -314,6 +316,7 @@
           veracrypt
           keepassxc
           flameshot
+          cmake
           gcc
           clang
           gnumake
@@ -322,6 +325,7 @@
           spotify
           playerctl
           aflplusplus
+          lua-language-server
           # python313Packages.setuptools
           # python313Packages.setuptools-scm
           # python313Packages.setuptools-rust
@@ -361,7 +365,7 @@
           go
           docker
           qemu_full
-          # binaryninja-free
+          binaryninja-free
           virtualbox
           firefox
           google-chrome
