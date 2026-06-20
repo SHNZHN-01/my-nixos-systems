@@ -2,6 +2,7 @@
   flake.nixosModules.desktop =
     { config, pkgs, ... }:
     let
+      username = config.username;
       wrapped = self.packages.${pkgs.system};
       alacritty = self.lib.makeAlacritty {
         inherit pkgs;
@@ -215,6 +216,8 @@
 
       programs.keybinds.enable = true;
 
+      # virtualisation.virtualbox.host.enable = true;
+
       services.unclutter = {
         enable = true;
         timeout = 5;
@@ -291,95 +294,117 @@
         }
       ];
 
+      virtualisation.libvirtd = {
+        enable = true;
+        qemu = {
+          package = pkgs.qemu_kvm;
+          # ovmf.enable = true;
+          # ovmf.packages = [ pkgs.OVMFFull.fd ]; # includes SecureBoot + TPM-capable build
+          swtpm.enable = true; # software TPM 2.0 for Win11
+        };
+      };
+      programs.virt-manager.enable = true;
       # TODO: move some of the packages here into different .nix files
       # TODO: add binary ninja
       # TODO: handle bat theme
-      users.users.${config.username}.packages =
-        with pkgs;
-        [
-          xev
-          xinit
-          btop
-          git
-          ripgrep
-          wiremix
-          bat
-          bat-extras.batman
-          dtach
-          ueberzugpp
-          zathura
-          dunst
-          eza
-          gh
-          gdb
-          xclip
-          veracrypt
-          keepassxc
-          flameshot
-          cmake
-          gcc
-          clang
-          gnumake
-          python3
-          discord
-          spotify
-          playerctl
-          aflplusplus
-          lua-language-server
-          # python313Packages.setuptools
-          # python313Packages.setuptools-scm
-          # python313Packages.setuptools-rust
-          # python313Packages.angr
-          # python313Packages.binwalk3
-          # binwalk
-          # owasp dependency check
-          # owasp dep scan
-          # jd-gui
-          burpsuite
-          wireshark
-          tshark
-          termshark
-          tcpdump
-          dnsutils
-          hashcat
-          hcxdumptool
-          aircrack-ng
-          pwntools
-          android-studio
-          android-tools
-          apktool
-          jadx
-          objection
-          trufflehog
-          trivy
-          gitleaks
-          cve-bin-tool
-          nuclei
-          sqlite
-          binsider
-          sqlmap
-          nmap
-          semgrep
-          codeql
-          frida-tools
-          go
-          docker
-          qemu_full
-          binaryninja-free
-          virtualbox
-          firefox
-          google-chrome
-          ungoogled-chromium
-        ]
-        ++ [
-          alacritty
-          polybar
-          rofi
-        ]
-        ++ [
-          inputs.neovim-shnzhn.packages.${pkgs.stdenv.hostPlatform.system}.neovim-shnzhn
-          # inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+      users.users.${username} = {
+        extraGroups = [
+          "docker"
+          "libvirtd"
+          "kvm"
         ];
+        packages =
+          with pkgs;
+          [
+            xev
+            xinit
+            btop
+            git
+            ripgrep
+            wiremix
+            bat
+            bat-extras.batman
+            dtach
+            ueberzugpp
+            zathura
+            dunst
+            eza
+            gh
+            gdb
+            xclip
+            veracrypt
+            keepassxc
+            flameshot
+            cmake
+            gcc
+            clang
+            gnumake
+            python3
+            discord
+            spotify
+            playerctl
+            aflplusplus
+            lua-language-server
+            openssl
+            # python313Packages.setuptools
+            # python313Packages.setuptools-scm
+            # python313Packages.setuptools-rust
+            # python313Packages.angr
+            # python313Packages.binwalk3
+            # binwalk
+            # owasp dependency check
+            # owasp dep scan
+            # jd-gui
+            burpsuite
+            wireshark
+            tshark
+            termshark
+            tcpdump
+            dnsutils
+            hashcat
+            hcxdumptool
+            aircrack-ng
+            pwntools
+            android-studio
+            android-tools
+            apktool
+            jadx
+            objection
+            trufflehog
+            trivy
+            gitleaks
+            cve-bin-tool
+            nuclei
+            sqlite
+            binsider
+            sqlmap
+            nmap
+            semgrep
+            codeql
+            frida-tools
+            go
+            docker
+            qemu_full
+            binaryninja-free
+            virtualbox
+            firefox
+            google-chrome
+            ungoogled-chromium
+            lsof
+            opencode
+            virtio-win
+            efibootmgr
+          ]
+          ++ [
+            alacritty
+            polybar
+            rofi
+          ]
+          ++ [
+            inputs.neovim-shnzhn.packages.${pkgs.stdenv.hostPlatform.system}.neovim-shnzhn
+            # inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+          ];
+      };
 
       nixpkgs.config.android_sdk.accept_license = true;
 

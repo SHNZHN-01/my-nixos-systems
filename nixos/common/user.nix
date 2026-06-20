@@ -10,7 +10,6 @@
         group = username;
         extraGroups = [
           "wheel"
-          "docker"
         ];
         hashedPasswordFile = "/persist/passwords/${username}";
       };

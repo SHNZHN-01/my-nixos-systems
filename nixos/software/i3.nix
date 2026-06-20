@@ -37,6 +37,7 @@
 
           focus_wrapping workspace
 
+          for_window [class="veracrypt"] floating disable
           for_window [class="floatmixer"] floating enable, resize set 900 550, move position center
           bindsym $mod+Shift+v exec --no-startup-id alacritty --class floatmixer -e wiremix
 

@@ -136,7 +136,7 @@
               name = id;
               value = {
                 install_url = "https://addons.mozilla.org/firefox/downloads/latest/${id}/latest.xpi";
-                installation_mode = "force_installed";
+                #installation_mode = "force_installed";
                 sidebar_action = "pin";
               };
             }) extensions
