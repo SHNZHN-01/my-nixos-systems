@@ -36,31 +36,6 @@
             };
           };
         };
-
-        storage = {
-          type = "disk";
-          device = "/dev/disk/by-path/pci-0000:00:17.0-ata-4";
-          content = {
-            type = "gpt";
-            partitions = {
-              luks = {
-                size = "100%";
-                content = {
-                  type = "luks";
-                  name = "crypted-storage";
-                  settings = {
-                    allowDiscards = true;
-                  };
-                  content = {
-                    type = "lvm_pv";
-                    vg = "vg_storage";
-                  };
-                };
-              };
-            };
-          };
-        };
-
         vms = {
           type = "disk";
           device = "/dev/disk/by-path/pci-0000:02:00.0-nvme-1";
@@ -132,53 +107,6 @@
 
           };
         };
-
-        vg_storage = {
-          type = "lvm_vg";
-          lvs = {
-            lv_games = {
-              size = "1500G";
-              content = {
-                type = "filesystem";
-                format = "ext4";
-                mountpoint = "/data/games";
-                mountOptions = [ "defaults" ];
-              };
-            };
-
-            lv_audio = {
-              size = "1000G";
-              content = {
-                type = "filesystem";
-                format = "ext4";
-                mountpoint = "/data/audio";
-                mountOptions = [ "defaults" ];
-              };
-            };
-
-            lv_blender = {
-              size = "600G";
-              content = {
-                type = "filesystem";
-                format = "ext4";
-                mountpoint = "/data/blender";
-                mountOptions = [ "defaults" ];
-              };
-            };
-
-            lv_video = {
-              # ~500G
-              size = "100%FREE";
-              content = {
-                type = "filesystem";
-                format = "ext4";
-                mountpoint = "/data/video";
-                mountOptions = [ "defaults" ];
-              };
-            };
-          };
-        };
-
         vg_vms = {
           type = "lvm_vg";
           lvs = {

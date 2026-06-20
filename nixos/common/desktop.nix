@@ -216,13 +216,6 @@
 
       programs.keybinds.enable = true;
 
-      boot.loader.limine.extraEntries = ''
-        /Windows 11
-            comment: Reboot into Windows Boot Manager
-            protocol: efi_boot_entry
-            entry: Windows Boot Manager
-      '';
-
       # virtualisation.virtualbox.host.enable = true;
 
       services.unclutter = {
