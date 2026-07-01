@@ -394,6 +394,9 @@
             opencode
             virtio-win
             efibootmgr
+            gef
+            patchelf
+            nasm
           ]
           ++ [
             alacritty
