@@ -397,6 +397,10 @@
             gef
             patchelf
             nasm
+            dmg2img
+            p7zip
+            xar
+            pbzx
           ]
           ++ [
             alacritty
