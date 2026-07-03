@@ -338,6 +338,7 @@
             cmake
             gcc
             clang
+            clang-tools
             gnumake
             python3
             discord
