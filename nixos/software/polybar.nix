@@ -47,7 +47,7 @@
 
         "bar/main" = {
           width = "100%";
-          height = "20pt";
+          height = "25pt";
           radius = 0;
           top = false;
           bottom = true;

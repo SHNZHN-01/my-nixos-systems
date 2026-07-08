@@ -17,7 +17,7 @@
       username = config.username;
 
       xresources = pkgs.writeText "Xresources" ''
-        Xft.dpi: 96
+        Xft.dpi: 120 
       '';
 
       escape = path: builtins.replaceStrings [ "/" ] [ "-" ] (lib.removePrefix "/" path);
@@ -33,10 +33,14 @@
 
       networking.hostName = "computer";
       boot.loader.limine.extraEntries = ''
-        /Windows 11
-            comment: Reboot into Windows Boot Manager
-            protocol: efi_boot_entry
-            entry: Windows Boot Manager
+        /Windows 11 (gaming)
+            comment: Windows on ESP 29fec807
+            protocol: efi
+            path: guid(29fec807-5ef6-4fe4-8322-3300421c01f0):/EFI/Microsoft/Boot/bootmgfw.efi
+        /Windows 11 (infosec)
+            comment: Windows on ESP 1a750d7e
+            protocol: efi
+            path: guid(1a750d7e-f696-44f2-808e-e3b2cc469faf):/EFI/Microsoft/Boot/bootmgfw.efi
       '';
 
       systemd.tmpfiles.rules = [
@@ -44,7 +48,7 @@
       ];
 
       services.xserver.displayManager.startx.extraCommands = ''
-        xrandr --output HDMI-0 --mode 1920x1080 --rotate left --pos 0x0 --output DP-2 --mode 1920x1080 --rotate normal --primary --pos 1080x0
+        xrandr --output DP-2 --mode 2560x1440 --rotate normal --primary --rate 240.00
         xrdb -merge ${xresources}
       '';
 

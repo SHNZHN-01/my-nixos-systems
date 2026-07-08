@@ -145,7 +145,8 @@
           bindsym $mod+Escape exec flameshot gui -p $HOME/pictures/screenshots
           bindsym $mod+Shift+Escape exec flameshot gui
 
-          exec --no-startup-id i3-msg "workspace 9; layout tabbed; exec discord; exec keepassxc; exec veracrypt; exec whatsapp-electron; exec Telegram; exec spotify"
+          #exec --no-startup-id i3-msg "workspace 9; layout tabbed; exec discord; exec keepassxc; exec veracrypt; exec whatsapp-electron; exec Telegram; exec spotify"
+          exec --no-startup-id i3-msg "workspace 9; layout tabbed; exec keepassxc; exec veracrypt"
 
           default_border pixel 1
           default_floating_border pixel 1
