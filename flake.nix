@@ -19,6 +19,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    NixOS-WSL = {
+      url = "github:nix-community/NixOS-WSL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # zen-browser = {
     #     url = "github:youwen5/zen-browser-flake";
     #     inputs.nixpkgs.follows = "nixpkgs";
