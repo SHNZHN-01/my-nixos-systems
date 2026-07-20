@@ -41,7 +41,8 @@
           gnumake
           python3
           lua-language-server
-
+          opencode
+          lsof
         ]
         ++ [
           inputs.neovim-shnzhn.packages.${pkgs.stdenv.hostPlatform.system}.neovim-shnzhn
