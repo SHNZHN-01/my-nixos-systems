@@ -241,6 +241,13 @@
         '';
       };
 
+      services.libinput = {
+        enable = true;
+        mouse = {
+          accelProfile = "flat";
+        };
+      };
+
       hardware.logitech.wireless.enable = true;
       hardware.logitech.wireless.enableGraphical = true;
       services.pulseaudio.enable = false;

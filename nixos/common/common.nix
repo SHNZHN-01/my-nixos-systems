@@ -20,8 +20,11 @@
       ];
 
       console = {
-        font = "Lat2-Terminus16";
+        # font = "Lat2-Terminus16";
+        font = "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
+        packages = with pkgs; [ terminus_font ];
         keyMap = "us";
+        earlySetup = true;
         # useXkbConfig = true; use xkb.options in tty.
       };
 

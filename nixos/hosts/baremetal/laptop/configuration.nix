@@ -26,8 +26,6 @@
       theme.font.polybar_size = 10;
       theme.font.rofi_size = 13;
 
-      services.libinput.enable = true;
-
       boot.initrd.availableKernelModules = [
         "nvme"
         "xhci_pci"
