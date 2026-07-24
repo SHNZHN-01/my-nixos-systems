@@ -381,7 +381,7 @@
             trufflehog
             trivy
             gitleaks
-            cve-bin-tool
+            #cve-bin-tool
             nuclei
             sqlite
             binsider
@@ -392,7 +392,7 @@
             frida-tools
             go
             docker
-            qemu_full
+            #qemu_full
             binaryninja-free
             virtualbox
             firefox
