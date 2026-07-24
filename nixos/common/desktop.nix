@@ -409,6 +409,7 @@
             p7zip
             xar
             pbzx
+            vscode
           ]
           ++ [
             alacritty
