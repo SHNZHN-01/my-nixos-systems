@@ -81,6 +81,7 @@
         egrep = "egrep --color=auto";
         readelf = "readelf -W";
         objdump = "objdump -M intel";
+        mixer = "wiremix";
       };
 
       system.stateVersion = "26.05";

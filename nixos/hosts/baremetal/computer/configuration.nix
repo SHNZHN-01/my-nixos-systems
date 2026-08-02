@@ -34,11 +34,11 @@
       networking.hostName = "computer";
       boot.loader.limine.extraEntries = ''
         /Windows 11 (gaming)
-            comment: Windows on ESP 29fec807
+            comment: Windows Gaming
             protocol: efi
-            path: guid(29fec807-5ef6-4fe4-8322-3300421c01f0):/EFI/Microsoft/Boot/bootmgfw.efi
+            path: guid(1e4f7eb6-c8ae-4fbe-a645-4b53c0e4d267):/EFI/Microsoft/Boot/bootmgfw.efi
         /Windows 11 (infosec)
-            comment: Windows on ESP 1a750d7e
+            comment: Windows Infosec
             protocol: efi
             path: guid(1a750d7e-f696-44f2-808e-e3b2cc469faf):/EFI/Microsoft/Boot/bootmgfw.efi
       '';
@@ -54,11 +54,13 @@
 
       boot.initrd.availableKernelModules = [
         "xhci_pci"
+        "ehci_pci"
         "ahci"
         "nvme"
         "usbhid"
         "sd_mod"
       ];
+      boot.initrd.includeDefaultModules = true;
       boot.initrd.kernelModules = [ "dm-snapshot" ];
       boot.kernelModules = [ "kvm-intel" ];
       boot.extraModulePackages = [ ];

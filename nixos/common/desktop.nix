@@ -225,6 +225,7 @@
       };
       services.xserver.enable = true;
       services.xserver.autorun = false;
+      # services.xserver.desktopManager.runXdgAutostartIfNone = true;
       services.xserver.xkb.options = "compose:ralt";
       services.xserver.windowManager.i3 = {
         enable = true;
@@ -359,9 +360,9 @@
             # python313Packages.setuptools-rust
             # python313Packages.angr
             # python313Packages.binwalk3
-            # binwalk
-            # owasp dependency check
-            # owasp dep scan
+            binwalk
+            # owasp-dependency-check
+            # owasp-dep-scan
             # jd-gui
             burpsuite
             wireshark
