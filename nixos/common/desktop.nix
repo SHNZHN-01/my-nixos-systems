@@ -411,6 +411,8 @@
             xar
             pbzx
             vscode
+            pyright
+            ruff
           ]
           ++ [
             alacritty
