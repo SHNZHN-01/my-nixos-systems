@@ -212,6 +212,7 @@
         self.nixosModules.firefox
         self.nixosModules.fcitx5
         self.nixosModules.formatter
+        self.nixosModules.llamacpp
       ];
 
       programs.keybinds.enable = true;
@@ -258,6 +259,7 @@
         alsa.enable = true;
         alsa.support32Bit = true;
         pulse.enable = true;
+        jack.enable = true;
       };
 
       fonts.packages = with pkgs; [
@@ -413,6 +415,8 @@
             vscode
             pyright
             ruff
+            pi-coding-agent
+            jq
           ]
           ++ [
             alacritty
