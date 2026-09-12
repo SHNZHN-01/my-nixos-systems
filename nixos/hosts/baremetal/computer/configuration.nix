@@ -25,6 +25,7 @@
     {
       imports = [
         self.nixosModules.common
+        self.nixosModules.llamacpp
         self.nixosModules.desktop
 
         inputs.disko.nixosModules.disko

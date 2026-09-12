@@ -212,7 +212,6 @@
         self.nixosModules.firefox
         self.nixosModules.fcitx5
         self.nixosModules.formatter
-        self.nixosModules.llamacpp
       ];
 
       programs.keybinds.enable = true;
