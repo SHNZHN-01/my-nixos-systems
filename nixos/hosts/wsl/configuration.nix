@@ -43,6 +43,8 @@
           lua-language-server
           opencode
           lsof
+          bootdev-cli
+          uv
         ]
         ++ [
           inputs.neovim-shnzhn.packages.${pkgs.stdenv.hostPlatform.system}.neovim-shnzhn
