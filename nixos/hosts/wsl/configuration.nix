@@ -45,10 +45,59 @@
           lsof
           bootdev-cli
           uv
+          go
         ]
         ++ [
           inputs.neovim-shnzhn.packages.${pkgs.stdenv.hostPlatform.system}.neovim-shnzhn
         ];
+
+      programs.nix-ld.enable = true;
+      programs.nix-ld.libraries = with pkgs; [
+        stdenv.cc.cc.lib # libstdc++.so.6, libgcc_s.so.1 — by far the most important
+        zlib
+        zstd
+        openssl
+        curl
+        libffi
+        sqlite
+        bzip2
+        xz
+        ncurses
+        readline
+        glib
+        libxml2
+        libxslt
+        util-linux # libuuid
+        stdenv.cc.cc.lib # libstdc++.so.6, libgcc_s.so.1 — by far the most important
+        zlib
+        zstd
+        openssl
+        curl
+        libffi
+        sqlite
+        bzip2
+        xz
+        ncurses
+        readline
+        glib
+        libxml2
+        libxslt
+        util-linux # libuuid
+
+        # SDL/pygame: dlopen'd at runtime for video, input, and audio
+        libx11
+        libxext
+        libxcursor
+        libxi
+        libxfixes
+        libxrandr
+        libxscrnsaver
+        libxkbcommon
+        wayland
+        libGL
+        alsa-lib
+        libpulseaudio
+      ];
 
       programs.bash.promptInit = ''
         parse_git_branch() {
