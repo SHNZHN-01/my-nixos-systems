@@ -1,0 +1,36 @@
+_: {
+  flake.nixosModules.boot =
+    {
+      pkgs,
+      lib,
+      ...
+    }:
+    {
+      boot = {
+        loader = {
+          systemd-boot.enable = false;
+          limine = {
+            enable = true;
+            secureBoot.enable = true;
+            enrollConfig = true;
+            panicOnChecksumMismatch = true;
+            maxGenerations = 5;
+            extraConfig = ''
+              TIMEOUT: 10800
+              term_font_scale=1x1
+            '';
+          };
+          efi = {
+            canTouchEfiVariables = true;
+            efiSysMountPoint = "/boot";
+          };
+        };
+
+        kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
+        tmp = {
+          useTmpfs = true;
+          tmpfsSize = "16G";
+        };
+      };
+    };
+}
