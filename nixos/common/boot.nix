@@ -18,7 +18,7 @@ _: {
             panicOnChecksumMismatch = true;
             maxGenerations = 5;
             extraConfig = ''
-              TIMEOUT: 10800
+              TIMEOUT: 3
               term_font_scale=1x1
             '';
           };

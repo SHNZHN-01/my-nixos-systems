@@ -7,7 +7,7 @@ _: {
     {
       programs.ssh.extraConfig = ''
         Host homelab
-          HostName homelab.shnzhn
+          HostName 10.10.40.10
           User ${username}
           IdentityFile ~/.ssh/homelab
           IdentitiesOnly yes

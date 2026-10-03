@@ -52,8 +52,21 @@ let
           sleep 2
         done
 
+        ${lib.optionalString (hostname == "homelab") ''
+          echo "===> Generating LUKS enrollment and storage keys"
+          ( umask 077
+            dd if=/dev/urandom of=/tmp/enroll.key  bs=64 count=1 status=none
+            dd if=/dev/urandom of=/tmp/storage.key bs=64 count=1 status=none )
+        ''}
+
         echo "===> Partitioning with disko"
         disko --mode destroy,format,mount --flake ${self}#${hostname}
+
+        ${lib.optionalString (hostname == "homelab") ''
+          install -d -m 700 /mnt/var/lib/luks
+          install -m 400 /tmp/enroll.key /tmp/storage.key /mnt/var/lib/luks/
+          rm -f /tmp/enroll.key /tmp/storage.key
+        ''}
 
         echo "===> Generating Secure Boot keys"
         sbctl create-keys
@@ -77,7 +90,7 @@ let
 
         echo "===> Installing NixOS"
         nixos-install --flake ${self}#${hostname} --no-root-passwd
-        read -sp "===> Done. Press [ Enter ] to reboot. Remember to enter Setup Mode and run \`sbctl enroll-keys\` to enable Secure Boot..." || true
+        read -sp "===> Done. Press [ Enter ] to reboot. Remember to enter Setup Mode and run \`sbctl enroll-keys -m\` to enable Secure Boot..." || true
         clear
         reboot
       '';

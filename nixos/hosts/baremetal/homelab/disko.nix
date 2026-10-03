@@ -23,8 +23,15 @@
               root = {
                 size = "100%";
                 content = {
-                  type = "lvm_pv";
-                  vg = "vg_homelab";
+                  type = "luks";
+                  name = "crypted-homelab";
+                  settings.allowDiscards = true;
+                  additionalKeyFiles = [ "/tmp/enroll.key" ];
+                  enrollRecovery = true; # prints a recovery key + QR during install
+                  content = {
+                    type = "lvm_pv";
+                    vg = "vg_homelab";
+                  };
                 };
               };
             };
@@ -40,8 +47,15 @@
               data = {
                 size = "100%";
                 content = {
-                  type = "lvm_pv";
-                  vg = "vg_storage";
+                  type = "luks";
+                  name = "crypted-homelab-storage";
+                  initrdUnlock = false;
+                  settings.allowDiscards = true;
+                  additionalKeyFiles = [ "/tmp/storage.key" ];
+                  content = {
+                    type = "lvm_pv";
+                    vg = "vg_storage";
+                  };
                 };
               };
             };
