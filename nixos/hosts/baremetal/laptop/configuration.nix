@@ -35,14 +35,6 @@
           "sd_mod"
         ];
         kernelModules = [ "dm-snapshot" ];
-        luks = {
-          devices = {
-            crypted-laptop = {
-              preLVM = true;
-              allowDiscards = true;
-            };
-          };
-        };
       };
     };
 

@@ -7,10 +7,12 @@ _: {
     }:
     {
       boot = {
+        initrd.systemd.emergencyAccess = false;
         loader = {
           systemd-boot.enable = false;
           limine = {
             enable = true;
+            enableEditor = false;
             secureBoot.enable = true;
             enrollConfig = true;
             panicOnChecksumMismatch = true;
